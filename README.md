@@ -1104,4 +1104,24 @@ LOG:  autovacuum launcher started
 ```
 # Edit Code Running in Containers with Bind Mounts
 ![bind_mounts_assignment](https://github.com/NoriKaneshige/Docker_Volumes_and_Bind_Mounts/blob/master/bind_mounts_assignment.png)
-### taking host data that you have on your host machine, and then mounting that into a container, then changing it on the host and watching it be reflected inside the container
+### Taking host data that you have on your host machine, and then mounting that into a container, then changing it on the host and watching it be reflected inside the container
+```
+# standard template files from Jekyll website
+Koitaro@MacBook-Pro-3 udemy-docker-mastery % cd bindmount-sample-1
+Koitaro@MacBook-Pro-3 bindmount-sample-1 % ls -alF
+total 56
+drwxr-xr-x@  9 Koitaro  staff   288 May 14 15:31 ./
+drwxr-xr-x  36 Koitaro  staff  1152 May 14 15:38 ../
+-rw-r--r--   1 Koitaro  staff    58 May 14 15:31 .gitignore
+-rw-r--r--   1 Koitaro  staff  4583 May 14 15:31 404.html
+-rw-r--r--   1 Koitaro  staff  1126 May 14 15:31 Gemfile
+-rw-r--r--   1 Koitaro  staff  1652 May 14 15:31 _config.yml
+drwxr-xr-x   3 Koitaro  staff    96 May 14 15:31 _posts/
+-rw-r--r--   1 Koitaro  staff   539 May 14 15:31 about.md
+-rw-r--r--   1 Koitaro  staff   175 May 14 15:31 index.md
+```
+## Here is the image from Bret's docker hub
+![jekyll-serve image](https://hub.docker.com/r/bretfisher/jekyll-serve)
+```
+
+```
