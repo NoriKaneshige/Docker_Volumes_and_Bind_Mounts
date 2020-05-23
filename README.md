@@ -889,3 +889,8 @@ Koitaro@MacBook-Pro-3 dockerfile-sample-2 % echo "is it me you are looking for" 
 ## Let's check if the change is reflected in the file in the container
 ![edited_file_and_check_it_in_the_container](https://github.com/NoriKaneshige/Docker_Volumes_and_Bind_Mounts/blob/master/edited_file_and_check_it_in_the_container.png)
 
+## Database Upgrades with Named Volumes
+![database_upgrades_with_named_volumes](https://github.com/NoriKaneshige/Docker_Volumes_and_Bind_Mounts/blob/master/database_upgrades_with_named_volumes.png)
+```
+
+```
