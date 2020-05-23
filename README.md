@@ -1120,8 +1120,99 @@ drwxr-xr-x   3 Koitaro  staff    96 May 14 15:31 _posts/
 -rw-r--r--   1 Koitaro  staff   539 May 14 15:31 about.md
 -rw-r--r--   1 Koitaro  staff   175 May 14 15:31 index.md
 ```
+## Let's run a container from an image that Bret created for me
+## All information is in his docker hub such as WORKDIR, ports that I shoudl expose, etc
 ## Here is the image from Bret's docker hub
 [jekyll-serve image](https://hub.docker.com/r/bretfisher/jekyll-serve)
+## When jekyll was started, it built the website from the source file, and server is running
+![the_site_mounted_into_directory_in_container](https://github.com/NoriKaneshige/Docker_Volumes_and_Bind_Mounts/blob/master/the_site_mounted_into_directory_in_container.png)
 ```
+Koitaro@MacBook-Pro-3 bindmount-sample-1 % docker container run -p 80:4000 -v $(pwd):/site bretfisher/jekyll-serve
+Unable to find image 'bretfisher/jekyll-serve:latest' locally
+latest: Pulling from bretfisher/jekyll-serve
+aad63a933944: Pull complete
+cca28d9d22b9: Pull complete
+e46ee7bc75f6: Pull complete
+0f1bb95caf3b: Pull complete
+c9e95017f9d8: Pull complete
+3ab9072e63ee: Pull complete
+ba1c1568b588: Pull complete
+79a9273d3131: Pull complete
+501b69c4b92e: Pull complete
+Digest: sha256:661d4e73afdb91ca8bfe38f40ea361c32d2c540b2b11bed56785149a40935fa2
+Status: Downloaded newer image for bretfisher/jekyll-serve:latest
+Fetching gem metadata from https://rubygems.org/...........
+Fetching gem metadata from https://rubygems.org/.
+Resolving dependencies...
+Using bundler 2.1.4
+Using colorator 1.1.0
+Using concurrent-ruby 1.1.6
+Using eventmachine 1.2.7
+Using http_parser.rb 0.6.0
+Using ffi 1.12.2
+Using forwardable-extended 2.6.0
+Using liquid 4.0.3
+Using mercenary 0.3.6
+Using safe_yaml 1.0.5
+Using unicode-display_width 1.7.0
+Fetching rb-fsevent 0.10.4
+Fetching public_suffix 4.0.5
+Fetching rouge 3.19.0
+Using i18n 1.8.2
+Fetching rexml 3.2.4
+Using rb-inotify 0.10.1
+Using pathutil 0.16.2
+Using terminal-table 1.8.0
+Using em-websocket 0.5.1
+Fetching sassc 2.3.0
+Installing rexml 3.2.4
+Installing rb-fsevent 0.10.4
+Installing public_suffix 4.0.5
+Using listen 3.2.1
+Fetching kramdown 2.2.1
+Using jekyll-watch 2.2.1
+Using addressable 2.7.0
+Installing sassc 2.3.0 with native extensions
+Installing rouge 3.19.0
+Installing kramdown 2.2.1
+Using kramdown-parser-gfm 1.1.0
+Using jekyll-sass-converter 2.1.0
+Fetching jekyll 4.0.1
+Installing jekyll 4.0.1
+Fetching jekyll-feed 0.13.0
+Fetching jekyll-seo-tag 2.6.1
+Installing jekyll-feed 0.13.0
+Installing jekyll-seo-tag 2.6.1
+Fetching minima 2.5.1
+Installing minima 2.5.1
+Bundle complete! 6 Gemfile dependencies, 31 gems now installed.
+Use `bundle info [gemname]` to see where a bundled gem is installed.
+Post-install message from jekyll:
+-------------------------------------------------------------------------------------
+Jekyll 4.0 comes with some major changes, notably:
 
+  * Our `link` tag now comes with the `relative_url` filter incorporated into it.
+    You should no longer prepend `{{ site.baseurl }}` to `{% link foo.md %}`
+    For further details: https://github.com/jekyll/jekyll/pull/6727
+
+  * Our `post_url` tag now comes with the `relative_url` filter incorporated into it.
+    You shouldn't prepend `{{ site.baseurl }}` to `{% post_url 2019-03-27-hello %}`
+    For further details: https://github.com/jekyll/jekyll/pull/7589
+
+  * Support for deprecated configuration options has been removed. We will no longer
+    output a warning and gracefully assign their values to the newer counterparts
+    internally.
+-------------------------------------------------------------------------------------
+Configuration file: /site/_config.yml
+            Source: /site
+       Destination: /site/_site
+ Incremental build: disabled. Enable with --incremental
+      Generating...
+       Jekyll Feed: Generating feed for posts
+                    done in 0.598 seconds.
+ Auto-regeneration: enabled for '/site'
+    Server address: http://0.0.0.0:4000/
+  Server running... press ctrl-c to stop.
 ```
+## Let's edit the title of the first post in host directory to see if the edit is reflected in the container and website
+![the_site_mounted_into_directory_in_container_title_edited](https://github.com/NoriKaneshige/Docker_Volumes_and_Bind_Mounts/blob/master/the_site_mounted_into_directory_in_container_title_edited.png)
