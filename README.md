@@ -831,3 +831,15 @@ Digest: sha256:30dfa439718a17baafefadf16c5e7c9d0a1cde97b4fd84f63b69e13513be7097
 Status: Downloaded newer image for nginx:latest
 2163ea4cf527cb5b7e83edcea786ea90fb2d180c87d86a2d526bdfbafd9ab717
 ```
+## Let's try to run container names as nginx2 using default nginx index.html file on a different port 8080
+![default_nginx_index_html_running_on_8080](https://github.com/NoriKaneshige/Docker_Volumes_and_Bind_Mounts/blob/master/default_nginx_index_html_running_on_8080.png)
+```
+Koitaro@MacBook-Pro-3 dockerfile-sample-2 % docker container run -d --name nginx2 -p 8080:80 nginx
+636665d487b941d1a61b6a35e92102a1c6ff64a5fddf9c7ff3cf9a774acd6bea
+
+Koitaro@MacBook-Pro-3 dockerfile-sample-2 % docker container ls
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES
+636665d487b9        nginx               "nginx -g 'daemon of…"   15 seconds ago      Up 14 seconds       0.0.0.0:8080->80/tcp   nginx2
+2163ea4cf527        nginx               "nginx -g 'daemon of…"   10 minutes ago      Up 10 minutes       0.0.0.0:80->80/tcp     nginx
+```
+
