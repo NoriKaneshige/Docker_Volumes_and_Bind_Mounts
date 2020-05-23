@@ -1121,7 +1121,7 @@ drwxr-xr-x   3 Koitaro  staff    96 May 14 15:31 _posts/
 -rw-r--r--   1 Koitaro  staff   175 May 14 15:31 index.md
 ```
 ## Here is the image from Bret's docker hub
-![jekyll-serve image](https://hub.docker.com/r/bretfisher/jekyll-serve)
+[jekyll-serve image](https://hub.docker.com/r/bretfisher/jekyll-serve)
 ```
 
 ```
