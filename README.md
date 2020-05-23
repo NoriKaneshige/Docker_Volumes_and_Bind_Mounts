@@ -832,7 +832,7 @@ Status: Downloaded newer image for nginx:latest
 2163ea4cf527cb5b7e83edcea786ea90fb2d180c87d86a2d526bdfbafd9ab717
 ```
 ## Let's try to run container names as nginx2 using default nginx index.html file on a different port 8080
-![default_nginx_index_html_running_on_8080](https://github.com/NoriKaneshige/Docker_Volumes_and_Bind_Mounts/blob/master/default_nginx_index_html_running_on_8080.png)
+![default_nginx_index_html_running_on_8080_edit](https://github.com/NoriKaneshige/Docker_Volumes_and_Bind_Mounts/blob/master/default_nginx_index_html_running_on_8080_edit.png)
 ```
 Koitaro@MacBook-Pro-3 dockerfile-sample-2 % docker container run -d --name nginx2 -p 8080:80 nginx
 636665d487b941d1a61b6a35e92102a1c6ff64a5fddf9c7ff3cf9a774acd6bea
