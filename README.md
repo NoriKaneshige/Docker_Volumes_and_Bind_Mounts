@@ -1,4 +1,7 @@
 # Docker_Volumes_and_Bind_Mounts
+### Bind Mount, persistent data, allows you to attach an existing directory on your host to a directory inside of a container. This is what is used when you are trying to map the files from a directory on the host into a directory in the container.
+
+### When making a new volume for a mysql container, you can look Docker Hub to see where the data path should be located in the container. Looking through the README.md or Dockerfile of the mysql official image, you could find the database path documented or the VOLUME stanza.
 
 ![volumes_and_bind_mounts](https://github.com/NoriKaneshige/Docker_Volumes_and_Bind_Mounts/blob/master/volumes_and_bind_mounts.png)
 
