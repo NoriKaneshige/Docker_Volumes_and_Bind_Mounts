@@ -918,3 +918,187 @@ Status: Downloaded newer image for postgres:9.6.1
 f0b87bfe0a3e561612ac9c1dd33e5d87c0b962c9dd71f54d4e4ccdc5a9de3f11
 
 ```
+## Check the log of the container, psql
+## we can keep watching it by -f command as it runs, database system is ready to accept connections
+## then stop the container
+```
+Koitaro@MacBook-Pro-3 ~ % docker container logs -f psql
+The files belonging to this database system will be owned by user "postgres".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.utf8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+fixing permissions on existing directory /var/lib/postgresql/data ... ok
+creating subdirectories ... ok
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting dynamic shared memory implementation ... posix
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+
+WARNING: enabling "trust" authentication for local connections
+You can change this by editing pg_hba.conf or using the option -A, or
+--auth-local and --auth-host, the next time you run initdb.
+syncing data to disk ... ok
+
+Success. You can now start the database server using:
+
+    pg_ctl -D /var/lib/postgresql/data -l logfile start
+
+****************************************************
+WARNING: No password has been set for the database.
+         This will allow anyone with access to the
+         Postgres port to access your database. In
+         Docker's default configuration, this is
+         effectively any other container on the same
+         system.
+
+         Use "-e POSTGRES_PASSWORD=password" to set
+         it in "docker run".
+****************************************************
+waiting for server to start....LOG:  could not bind IPv6 socket: Cannot assign requested address
+HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+LOG:  database system was shut down at 2020-05-23 13:06:20 UTC
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ done
+server started
+ALTER ROLE
+
+
+/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+
+LOG:  received fast shutdown request
+LOG:  aborting any active transactions
+LOG:  autovacuum launcher shutting down
+waiting for server to shut down....LOG:  shutting down
+LOG:  database system is shut down
+ done
+server stopped
+
+PostgreSQL init process complete; ready for start up.
+
+LOG:  database system was shut down at 2020-05-23 13:06:21 UTC
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+
+
+Koitaro@MacBook-Pro-3 ~ % docker container ls
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+f0b87bfe0a3e        postgres:9.6.1      "/docker-entrypoint.…"   7 minutes ago       Up 7 minutes        5432/tcp            psql
+
+Koitaro@MacBook-Pro-3 ~ % docker container stop f0b
+f0b
+Koitaro@MacBook-Pro-3 ~ % docker container ls
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+```
+## Let's run a container with new upgraded posgtres image 9.6.2, with a different container name
+```
+Koitaro@MacBook-Pro-3 ~ % docker container run -d --name psql2 -v psql:/var/lib/posgtresql/data postgres:9.6.2
+Unable to find image 'postgres:9.6.2' locally
+9.6.2: Pulling from library/postgres
+10a267c67f42: Pull complete
+e9a920522e33: Pull complete
+6888e696bd71: Pull complete
+798096eed143: Pull complete
+fb58419959b5: Pull complete
+97f9ec09cb68: Pull complete
+d58678d9d3ab: Pull complete
+ece2bc4a78f4: Pull complete
+eadac36b8440: Pull complete
+4da13987a6ca: Pull complete
+bd2eab93fc5a: Pull complete
+2efd8a94a8d7: Pull complete
+cd1f07c4ebbe: Pull complete
+Digest: sha256:5284ba74a1065e34cf1bfccd64caf8c497c8dc623d6207b060b5ebd369427d34
+Status: Downloaded newer image for postgres:9.6.2
+17147db53c0079ba6d19cceb2ecdfd2381ea4d25dcb6ddb772233bb76d753da0
+
+Koitaro@MacBook-Pro-3 ~ % docker container ls -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                     PORTS               NAMES
+17147db53c00        postgres:9.6.2      "docker-entrypoint.s…"   2 minutes ago       Up 2 minutes               5432/tcp            psql2
+f0b87bfe0a3e        postgres:9.6.1      "/docker-entrypoint.…"   13 minutes ago      Exited (0) 5 minutes ago                       psql
+```
+## check if we have only one volume for posgres containers because we only used one volume
+```
+Koitaro@MacBook-Pro-3 ~ % docker volume ls
+DRIVER              VOLUME NAME
+local               psql
+```
+## check the logs of the upgraded database container, psql2
+## database system is ready to accept connections
+```
+Koitaro@MacBook-Pro-3 ~ % docker container logs psql2
+The files belonging to this database system will be owned by user "postgres".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.utf8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+fixing permissions on existing directory /var/lib/postgresql/data ... ok
+creating subdirectories ... ok
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting dynamic shared memory implementation ... posix
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+
+WARNING: enabling "trust" authentication for local connections
+You can change this by editing pg_hba.conf or using the option -A, or
+--auth-local and --auth-host, the next time you run initdb.
+syncing data to disk ... ok
+
+Success. You can now start the database server using:
+
+    pg_ctl -D /var/lib/postgresql/data -l logfile start
+
+****************************************************
+WARNING: No password has been set for the database.
+         This will allow anyone with access to the
+         Postgres port to access your database. In
+         Docker's default configuration, this is
+         effectively any other container on the same
+         system.
+
+         Use "-e POSTGRES_PASSWORD=password" to set
+         it in "docker run".
+****************************************************
+waiting for server to start....LOG:  could not bind IPv6 socket: Cannot assign requested address
+HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+LOG:  database system was shut down at 2020-05-23 13:17:38 UTC
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ done
+server started
+ALTER ROLE
+
+
+/usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+
+waiting for server to shut down...LOG:  received fast shutdown request
+LOG:  aborting any active transactions
+LOG:  autovacuum launcher shutting down
+LOG:  shutting down
+.LOG:  database system is shut down
+ done
+server stopped
+
+PostgreSQL init process complete; ready for start up.
+
+LOG:  database system was shut down at 2020-05-23 13:17:39 UTC
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+```
