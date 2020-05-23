@@ -764,3 +764,5 @@ Koitaro@MacBook-Pro-3 ~ % docker container inspect mysql3
     }
 ]
 ```
+# Bind Mounts
+![bind_mounts](https://github.com/NoriKaneshige/Docker_Volumes_and_Bind_Mounts/blob/master/bind_mounts.png)
