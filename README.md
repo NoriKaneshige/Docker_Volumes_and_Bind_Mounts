@@ -1102,3 +1102,6 @@ LOG:  MultiXact member wraparound protections are now enabled
 LOG:  database system is ready to accept connections
 LOG:  autovacuum launcher started
 ```
+# Edit Code Running in Containers with Bind Mounts
+![bind_mounts_assignment](https://github.com/NoriKaneshige/Docker_Volumes_and_Bind_Mounts/blob/master/bind_mounts_assignment.png)
+### taking host data that you have on your host machine, and then mounting that into a container, then changing it on the host and watching it be reflected inside the container
