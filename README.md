@@ -889,8 +889,32 @@ Koitaro@MacBook-Pro-3 dockerfile-sample-2 % echo "is it me you are looking for" 
 ## Let's check if the change is reflected in the file in the container
 ![edited_file_and_check_it_in_the_container](https://github.com/NoriKaneshige/Docker_Volumes_and_Bind_Mounts/blob/master/edited_file_and_check_it_in_the_container.png)
 
-## Database Upgrades with Named Volumes
+# Database Upgrades with Named Volumes
 ![database_upgrades_with_named_volumes](https://github.com/NoriKaneshige/Docker_Volumes_and_Bind_Mounts/blob/master/database_upgrades_with_named_volumes.png)
+## Find the path for volume in Docker Hub
+![docker_hub_postgres_9_6_1](https://github.com/NoriKaneshige/Docker_Volumes_and_Bind_Mounts/blob/master/docker_hub_postgres_9_6_1.png)
+![postgres_9_6_1_volume](https://github.com/NoriKaneshige/Docker_Volumes_and_Bind_Mounts/blob/master/postgres_9_6_1_volume.png)
+
+## Let's run a container from image, postgres 9.6.1
+## name it as psql, name the volume as psql, no ports are necessary this time
 ```
+Koitaro@MacBook-Pro-3 ~ % docker container run -d --name psql -v psql:/var/lib/posgtresql/data postgres:9.6.1
+Unable to find image 'postgres:9.6.1' locally
+9.6.1: Pulling from library/postgres
+5040bd298390: Pull complete
+f08454c3c700: Pull complete
+4db038cdfe03: Pull complete
+e1d9ba315f03: Pull complete
+25e0ee93170e: Pull complete
+3f28084c3f51: Pull complete
+78c91f0aedcd: Pull complete
+93ab52dbcbb8: Pull complete
+27ec75825613: Pull complete
+28ef691a9920: Pull complete
+0f0dd20755c9: Pull complete
+2a4a824861f7: Pull complete
+Digest: sha256:0842a7ef786aa2658623085160cb38451eb3d40856e7d222ae0069b6e6296877
+Status: Downloaded newer image for postgres:9.6.1
+f0b87bfe0a3e561612ac9c1dd33e5d87c0b962c9dd71f54d4e4ccdc5a9de3f11
 
 ```
