@@ -766,3 +766,68 @@ Koitaro@MacBook-Pro-3 ~ % docker container inspect mysql3
 ```
 # Bind Mounts
 ![bind_mounts](https://github.com/NoriKaneshige/Docker_Volumes_and_Bind_Mounts/blob/master/bind_mounts.png)
+## Let's try bind mounts with nginx
+```
+Koitaro@MacBook-Pro-3 udemy-docker-mastery % cd dockerfile-sample-2
+Koitaro@MacBook-Pro-3 dockerfile-sample-2 % ls
+Dockerfile	index.html
+
+Koitaro@MacBook-Pro-3 dockerfile-sample-2 % ls -alF
+total 16
+drwxr-xr-x@  4 Koitaro  staff   128 May 15 19:34 ./
+drwxr-xr-x  36 Koitaro  staff  1152 May 14 15:38 ../
+-rw-r--r--@  1 Koitaro  staff   481 May 21 23:03 Dockerfile
+-rw-r--r--   1 Koitaro  staff   249 May 14 15:31 index.html
+```
+## Dockerfile and index.html in this directory
+## Dockerfile is very simple and just specifying a working directory and copy the index.html into that directory
+```
+# Dockerfile
+# this shows how we can extend/change an existing official image from Docker Hub
+
+FROM nginx:latest
+# highly recommend you always pin versions for anything beyond dev/learn
+
+WORKDIR /usr/share/nginx/html
+# change working directory to root of nginx webhost
+# using WORKDIR is preferred to using 'RUN cd /some/path'
+
+COPY index.html index.html
+
+# copy my source code from my local machine into your container images
+# I don't have to specify EXPOSE or CMD because they're in my FROM
+
+# index.html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Your 2nd Dockerfile worked!</title>
+
+</head>
+
+<body>
+  <h1>You just successfully ran a container with a custom file copied into the image at build time!</h1>
+</body>
+</html>
+```
+## Let's run a container
+## name it as nginx, and give it port 80:80, and a volume
+## we need to tell it our current working directory, which is going to be mounted into that working directory in the container
+## index.html is here in the folder. I want this file to be in the container so I can edit it here in the folder and it is seen live in the container
+## Instead of typing whole path, we can use $(pwd), which is shell shortcut that prints out working directory and replaces this command with that path
+## Right side is the working directory that is specified in Dockerfile
+## Finally, we specify the nginx image
+![custom_nginx_working_in_localhost](https://github.com/NoriKaneshige/Docker_Volumes_and_Bind_Mounts/blob/master/custom_nginx_working_in_localhost.png)
+```
+Koitaro@MacBook-Pro-3 dockerfile-sample-2 % docker container run -d --name nginx -p 80:80 -v $(pwd):/usr/share/nginx/html nginx
+Unable to find image 'nginx:latest' locally
+latest: Pulling from library/nginx
+afb6ec6fdc1c: Already exists
+b90c53a0b692: Pull complete
+11fa52a0fdc0: Pull complete
+Digest: sha256:30dfa439718a17baafefadf16c5e7c9d0a1cde97b4fd84f63b69e13513be7097
+Status: Downloaded newer image for nginx:latest
+2163ea4cf527cb5b7e83edcea786ea90fb2d180c87d86a2d526bdfbafd9ab717
+```
