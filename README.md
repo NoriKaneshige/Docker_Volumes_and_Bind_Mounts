@@ -843,3 +843,46 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 2163ea4cf527        nginx               "nginx -g 'daemon of…"   10 minutes ago      Up 10 minutes       0.0.0.0:80->80/tcp     nginx
 ```
 
+## Let's now open another command line and get a command line in the container that we are running (custom one)
+## Then, go to that directory, specified in Dockerfile
+## We can see the Dockerfile because we mapped the whole directory into the working directory in the container
+```
+Koitaro@MacBook-Pro-3 ~ % docker container exec -it nginx bash
+root@2163ea4cf527:/# cd /usr/share/nginx/html
+root@2163ea4cf527:/usr/share/nginx/html# ls -al
+total 12
+drwxr-xr-x 4 root root  128 May 15 23:34 .
+drwxr-xr-x 3 root root 4096 May 15 20:15 ..
+-rw-r--r-- 1 root root  481 May 22 03:03 Dockerfile
+-rw-r--r-- 1 root root  249 May 14 19:31 index.html
+```
+## Let's create a new file in the current folder
+```
+Koitaro@MacBook-Pro-3 dockerfile-sample-2 % touch testme.txt
+
+Koitaro@MacBook-Pro-3 dockerfile-sample-2 % ls -alF
+total 16
+drwxr-xr-x@  5 Koitaro  staff   160 May 22 22:04 ./
+drwxr-xr-x  36 Koitaro  staff  1152 May 14 15:38 ../
+-rw-r--r--@  1 Koitaro  staff   481 May 21 23:03 Dockerfile
+-rw-r--r--@  1 Koitaro  staff   249 May 14 15:31 index.html
+-rw-r--r--   1 Koitaro  staff     0 May 22 22:04 testme.txt
+```
+## Let's check what's in the container with another command line
+## Now, we see the created testme.txt
+```
+root@2163ea4cf527:/usr/share/nginx/html# ls -al
+total 12
+drwxr-xr-x 5 root root  160 May 23 02:04 .
+drwxr-xr-x 3 root root 4096 May 15 20:15 ..
+-rw-r--r-- 1 root root  481 May 22 03:03 Dockerfile
+-rw-r--r-- 1 root root  249 May 14 19:31 index.html
+-rw-r--r-- 1 root root    0 May 23 02:04 testme.txt
+```
+## Let's write something in testme.txt in the current directory by echo
+```
+Koitaro@MacBook-Pro-3 dockerfile-sample-2 % echo "is it me you are looking for" > testme.txt
+```
+## Let's check if the change is reflected in the file in the container
+![edited_file_and_check_it_in_the_container](https://github.com/NoriKaneshige/Docker_Volumes_and_Bind_Mounts/blob/master/edited_file_and_check_it_in_the_container.png)
+
